@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"upstox-sdk-go/interfaces"
 	"upstox-sdk-go/endpoints"
 )
@@ -11,8 +12,8 @@ type ConnectService struct {
 }
 
 // GetAccessToken ...
-func (service *ConnectService) GetAccessToken(params interface{}, headers map[string][]string, token interface{}) (error) {	
-	url := endpoints.URIhost + endpoints.URIAccessToken
-	err := service.HTTPService.PostJSON(url, params, headers, token)
+func (service *ConnectService) GetAccessToken(params interface{}, headers map[string][]string, data interface{}) (error) {	
+	url  := fmt.Sprintf(endpoints.URIAccessToken, endpoints.URIhost)
+	err := service.HTTPService.PostJSON(url, params, headers, data)
 	return err 
 }

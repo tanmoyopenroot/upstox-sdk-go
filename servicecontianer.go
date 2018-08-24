@@ -15,18 +15,27 @@ const (
 	RequestTimeout     int = 5
 )
 
+// Controller ...
+type Controller struct {
+	*controllers.ConnectController
+	*controllers.UserController
+}
+
 // ServiceContainer ... Injecting Dependencies
-func ServiceContainer() *controllers.ConnectController {
+func ServiceContainer() Controller {
 	client := &http.Client{
 		Transport: &http.Transport{
 				MaxIdleConnsPerHost: MaxIdleConnections,
 		},
 		Timeout: time.Duration(RequestTimeout) * time.Second,
 	}
+
 	clientModel := &models.ClientModel{}
+
 	httpService := &services.HTTPService{
 		HTTPClient: client,
 	}
+
 	connectService := &services.ConnectService{
 		HTTPService: httpService,
 	}
@@ -35,5 +44,17 @@ func ServiceContainer() *controllers.ConnectController {
 		Client: clientModel,
 	}
 
-	return connectController
+	userService := &services.UserService{
+		HTTPService: httpService,
+	}
+
+	userController := &controllers.UserController{
+		UserService: userService,
+		Client: clientModel,
+	}
+
+	return	Controller{
+		connectController,
+		userController,
+	}
 }

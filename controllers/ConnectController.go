@@ -37,11 +37,11 @@ func (controller *ConnectController) GenerateSession(apiSecret string, code stri
 		RedirectURI: redirectURI,
 	}
 
-	token := &viewmodels.AccessTokenModel{}
+	data := &viewmodels.AccessTokenModel{}
 	
-	err := controller.ConnectService.GetAccessToken(params, headers, token)
-	if err == nil && token.AccessToken != "" {
-		return token.AccessToken, nil
+	err := controller.ConnectService.GetAccessToken(params, headers, data)
+	if err == nil && data.AccessToken != "" {
+		return data.AccessToken, nil
 	}
 	return "", err
 }
@@ -53,6 +53,5 @@ func (controller *ConnectController) SetAccessToken(accessToken string) {
 
 // GetLoginURL ... Get the URL using API key
 func (controller *ConnectController) GetLoginURL(redirectURI string) (string) {
-	loginURL := endpoints.URIhost + endpoints.URIAuthorise
-	return fmt.Sprintf(loginURL, controller.Client.GetAPIKey(), redirectURI)
+	return fmt.Sprintf(endpoints.URIAuthorise, endpoints.URIhost, controller.Client.GetAPIKey(), redirectURI)
 }

@@ -21,7 +21,7 @@ type HTTPService struct {
 
 
 // PostJSON ... Post function
-func (service *HTTPService) PostJSON(url string, params interface{}, headers map[string][]string, token interface{}) (error) {
+func (service *HTTPService) PostJSON(url string, params interface{}, headers map[string][]string, data interface{}) (error) {
 	jsonData, err := json.Marshal(params)
 	if err != nil {
 		return err
@@ -34,7 +34,7 @@ func (service *HTTPService) PostJSON(url string, params interface{}, headers map
 	}
 
 	if headers == nil {
-		req.Header = map[string][]string{}
+		headers = map[string][]string{}
 	}
 	
 	req.Header = headers
@@ -60,7 +60,7 @@ func (service *HTTPService) PostJSON(url string, params interface{}, headers map
 		return errors.New(e.Message)
 	}
 
-	if err := json.Unmarshal(body, &token); err != nil {
+	if err := json.Unmarshal(body, &data); err != nil {
 		fmt.Printf("Error parsing JSON response: %v | %s", err, body)
 		return err
 	}
@@ -89,19 +89,47 @@ func (service *HTTPService) PostJSON(url string, params interface{}, headers map
 // 	return nil
 // }
 
-// func GetJSON(url string, token string, client http.Client, val interface{}) (err error) {
-// 	req, err := createJSONGetRequest(url, token)
-// 	if err != nil {
-// 		return err
-// 	}
+// GetJSON ... Get function
+func (service *HTTPService) GetJSON(url string, headers map[string][]string, data interface{}) (error) {
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return err
+	}
 
-// 	err = executeRequestCheckStatusDecodeJSONResponse(client, req, val)
-// 	if err != nil {
-// 		return err
-// 	}
+	if headers == nil {
+		headers = map[string][]string{}
+	}
+	
+	req.Header = headers
+	resp, err := service.HTTPClient.Do(req)
+	if err != nil {
+		return err
+	}
 
-// 	return nil
-// }
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Printf("Unable to read response: %v", err)
+		return err
+	}
+
+	defer resp.Body.Close()
+
+	if resp.StatusCode >= http.StatusBadRequest {
+		var e viewmodels.HTTPErrorModel
+		if err := json.Unmarshal(body, &e); err != nil {
+			fmt.Printf("Error parsing JSON response: %v", err)
+			return err
+		}
+		return errors.New(e.Message)
+	}
+
+	if err := json.Unmarshal(body, &data); err != nil {
+		fmt.Printf("Error parsing JSON response: %v | %s", err, body)
+		return err
+	}
+
+	return nil
+}
 
 
 // func CallAPI(method, url string, content *[]byte, h ...string) (*http.Response, error) {
