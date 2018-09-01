@@ -1,19 +1,19 @@
 package controllers
 
 import (
+	"encoding/base64"
 	"fmt"
 	"net/http"
-	"encoding/base64"
+	"upstox-sdk-go/endpoints"
 	"upstox-sdk-go/interfaces"
 	"upstox-sdk-go/models"
-	"upstox-sdk-go/endpoints"
 	"upstox-sdk-go/viewmodels"
 )
 
 // ConnectController ...
 type ConnectController struct {
 	ConnectService interfaces.IConnectService
-	Client *models.ClientModel
+	Client         *models.ClientModel
 }
 
 // New ... Create New Client
@@ -32,13 +32,13 @@ func (controller *ConnectController) GenerateSession(apiSecret string, code stri
 	headers.Set("Content-Type", "application/json")
 
 	params := &viewmodels.SessionBodyModel{
-		Code: code,
-		GrantType: "authorization_code",
+		Code:        code,
+		GrantType:   "authorization_code",
 		RedirectURI: redirectURI,
 	}
 
 	data := &viewmodels.AccessTokenModel{}
-	
+
 	err := controller.ConnectService.GetAccessToken(params, headers, data)
 	if err == nil && data.AccessToken != "" {
 		return data.AccessToken, nil
@@ -52,6 +52,6 @@ func (controller *ConnectController) SetAccessToken(accessToken string) {
 }
 
 // GetLoginURL ... Get the URL using API key
-func (controller *ConnectController) GetLoginURL(redirectURI string) (string) {
+func (controller *ConnectController) GetLoginURL(redirectURI string) string {
 	return fmt.Sprintf(endpoints.URIAuthorise, endpoints.URIhost, controller.Client.GetAPIKey(), redirectURI)
 }

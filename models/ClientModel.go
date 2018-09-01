@@ -1,8 +1,8 @@
 package models
 
-// ClientModel ...  
+// ClientModel ...
 type ClientModel struct {
-	apiKey string
+	apiKey      string
 	accessToken string
 }
 
@@ -12,16 +12,16 @@ func (model *ClientModel) SetAPIKey(key string) {
 }
 
 // GetAPIKey ... Get API Key
-func (model *ClientModel) GetAPIKey() (string){
+func (model *ClientModel) GetAPIKey() string {
 	return model.apiKey
 }
 
 // SetAccessToken ... Set AccessToken
 func (model *ClientModel) SetAccessToken(accessToken string) {
-	model.accessToken = accessToken;
+	model.accessToken = accessToken
 }
 
 // GetAccessToken ... Get AccessToken
-func (model *ClientModel) GetAccessToken() (string){
+func (model *ClientModel) GetAccessToken() string {
 	return model.accessToken
 }

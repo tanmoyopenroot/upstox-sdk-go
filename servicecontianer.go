@@ -3,11 +3,10 @@ package main
 import (
 	"net/http"
 	"time"
-	"upstox-sdk-go/services"
-	"upstox-sdk-go/models"
 	"upstox-sdk-go/controllers"
+	"upstox-sdk-go/models"
+	"upstox-sdk-go/services"
 )
-
 
 // Const ... for http client
 const (
@@ -19,13 +18,14 @@ const (
 type Controller struct {
 	*controllers.ConnectController
 	*controllers.UserController
+	*controllers.OrderController
 }
 
 // ServiceContainer ... Injecting Dependencies
 func ServiceContainer() Controller {
 	client := &http.Client{
 		Transport: &http.Transport{
-				MaxIdleConnsPerHost: MaxIdleConnections,
+			MaxIdleConnsPerHost: MaxIdleConnections,
 		},
 		Timeout: time.Duration(RequestTimeout) * time.Second,
 	}
@@ -41,7 +41,7 @@ func ServiceContainer() Controller {
 	}
 	connectController := &controllers.ConnectController{
 		ConnectService: connectService,
-		Client: clientModel,
+		Client:         clientModel,
 	}
 
 	userService := &services.UserService{
@@ -50,11 +50,21 @@ func ServiceContainer() Controller {
 
 	userController := &controllers.UserController{
 		UserService: userService,
-		Client: clientModel,
+		Client:      clientModel,
 	}
 
-	return	Controller{
+	orderService := &services.OrderService{
+		HTTPService: httpService,
+	}
+
+	orderController := &controllers.OrderController{
+		OrderService: orderService,
+		Client:       clientModel,
+	}
+
+	return Controller{
 		connectController,
 		userController,
+		orderController,
 	}
 }

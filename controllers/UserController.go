@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"net/url"
 	"fmt"
 	"net/http"
+	"net/url"
 	"upstox-sdk-go/interfaces"
 	"upstox-sdk-go/models"
 	"upstox-sdk-go/viewmodels"
@@ -12,7 +12,7 @@ import (
 // UserController ...
 type UserController struct {
 	UserService interfaces.IUserService
-	Client *models.ClientModel
+	Client      *models.ClientModel
 }
 
 // GetProfile ... Get user profile
@@ -23,7 +23,7 @@ func (controller *UserController) GetProfile() {
 	headers.Set("Authorization", basicAuth)
 	headers.Set("x-api-key", controller.Client.GetAPIKey())
 
-	data := &viewmodels.HTTPResponseModel{}
+	data := &viewmodels.Profile{}
 
 	err := controller.UserService.GetProfile(headers, data)
 	if err == nil && data.Code == 200 {
@@ -41,7 +41,7 @@ func (controller *UserController) GetBalance(kind string) {
 	headers.Set("Authorization", basicAuth)
 	headers.Set("x-api-key", controller.Client.GetAPIKey())
 
-	data := &viewmodels.HTTPResponseModel{}
+	data := &viewmodels.Balance{}
 
 	err := controller.UserService.GetBalance(kind, headers, data)
 	if err == nil && data.Code == 200 {
@@ -59,7 +59,7 @@ func (controller *UserController) GetPositions() {
 	headers.Set("Authorization", basicAuth)
 	headers.Set("x-api-key", controller.Client.GetAPIKey())
 
-	data := &viewmodels.HTTPResponseModel{}
+	data := &viewmodels.Position{}
 
 	err := controller.UserService.GetPositions(headers, data)
 	if err == nil && data.Code == 200 {
@@ -77,7 +77,7 @@ func (controller *UserController) GetHoldings() {
 	headers.Set("Authorization", basicAuth)
 	headers.Set("x-api-key", controller.Client.GetAPIKey())
 
-	data := &viewmodels.HTTPResponseModel{}
+	data := &viewmodels.Holdings{}
 
 	err := controller.UserService.GetHoldings(headers, data)
 	if err == nil && data.Code == 200 {
@@ -103,7 +103,7 @@ func (controller *UserController) GetMasterContracts(exchange string, symbol str
 		params.Set("token", token)
 	}
 
-	data := &viewmodels.HTTPResponseModel{}
+	data := &viewmodels.MasterContract{}
 
 	err := controller.UserService.GetMasterContracts(exchange, params, headers, data)
 	if err == nil && data.Code == 200 {
