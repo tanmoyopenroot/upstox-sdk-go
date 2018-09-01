@@ -56,9 +56,9 @@ func (controller *FeedController) SubscribeFeed(symbol []string, exchange, reque
 
 	err := controller.FeedService.SubscribeFeed(params, headers, data)
 	if err == nil && data.Code == 200 {
-		fmt.Println("Live Data ---- ", data)
+		fmt.Println("Subscribe Live Data ---- ", data)
 	} else {
-		fmt.Println("Live Data ---- ", err)
+		fmt.Println("Subscribe Live Data ---- ", err)
 	}
 }
 
@@ -79,8 +79,8 @@ func (controller *FeedController) UnsubscribeFeed(symbol []string, exchange, req
 
 	err := controller.FeedService.UnsubscribeFeed(params, headers, data)
 	if err == nil && data.Code == 200 {
-		fmt.Println("Live Data ---- ", data)
+		fmt.Println("unsubscribe Live Data ---- ", data)
 	} else {
-		fmt.Println("Live Data ---- ", err)
+		fmt.Println("Unsubscribe Live Data ---- ", err)
 	}
 }

@@ -21,9 +21,9 @@ const (
 	URITradesInfo          string = "%s/live/orders/%s/trades"
 	URITradeBook           string = "%s/live/trade-book"
 	URILiveFeed            string = "%s/live/feed/now/%s/%s/%s"
-	URILiveFeedSubscribe   string = "%s/live/feed/sub/%s/%s/?symbol=%s"
-	URILiveFeedUnSubscribe string = "%s/live/feed/unsub/%s/%s/?symbol=%s"
-	URIOHLC                string = "%s/historical/ohlc/%s/%s"
+	URILiveFeedSubscribe   string = "%s/live/feed/sub/%s/%s?symbol=%s"
+	URILiveFeedUnSubscribe string = "%s/live/feed/unsub/%s/%s?symbol=%s"
+	URIOHLC                string = "%s/historical/ohlc/%s/%s?%s"
 	URISocketParams        string = "%s/live/socket-params"
 	URISocketEndpoint      string = "wss://ws-api.upstox.com"
 )

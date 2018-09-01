@@ -20,6 +20,7 @@ type Controller struct {
 	*controllers.UserController
 	*controllers.OrderController
 	*controllers.FeedController
+	*controllers.HistoricalController
 }
 
 // ServiceContainer ... Injecting Dependencies
@@ -72,10 +73,20 @@ func ServiceContainer() Controller {
 		Client:      clientModel,
 	}
 
+	historicalService := &services.HistoricalService{
+		HTTPService: httpService,
+	}
+
+	historicalController := &controllers.HistoricalController{
+		HistoricalService: historicalService,
+		Client:            clientModel,
+	}
+
 	return Controller{
 		connectController,
 		userController,
 		orderController,
 		feedController,
+		historicalController,
 	}
 }

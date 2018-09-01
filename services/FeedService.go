@@ -14,21 +14,33 @@ type FeedService struct {
 
 // GetLiveFeed ...
 func (service *FeedService) GetLiveFeed(params url.Values, headers map[string][]string, data interface{}) error {
-	url := fmt.Sprintf(endpoints.URILiveFeed, endpoints.URIhost, params.Get("exchange"), params.Get("symbol"), params.Get("requestType"))
+	exchange := params.Get("exchange")
+	symbol := params.Get("symbol")
+	requestType := params.Get("requestType")
+
+	url := fmt.Sprintf(endpoints.URILiveFeed, endpoints.URIhost, exchange, symbol, requestType)
 	err := service.HTTPService.GET(url, headers, data)
 	return err
 }
 
 // SubscribeFeed ...
 func (service *FeedService) SubscribeFeed(params url.Values, headers map[string][]string, data interface{}) error {
-	url := fmt.Sprintf(endpoints.URILiveFeedSubscribe, endpoints.URIhost, params.Get("requestType"), params.Get("exchange"), params.Get("symbol"))
+	exchange := params.Get("exchange")
+	symbol := params.Get("symbol")
+	requestType := params.Get("requestType")
+
+	url := fmt.Sprintf(endpoints.URILiveFeedSubscribe, endpoints.URIhost, requestType, exchange, symbol)
 	err := service.HTTPService.GET(url, headers, data)
 	return err
 }
 
 // UnsubscribeFeed ...
 func (service *FeedService) UnsubscribeFeed(params url.Values, headers map[string][]string, data interface{}) error {
-	url := fmt.Sprintf(endpoints.URILiveFeedSubscribe, endpoints.URIhost, params.Get("requestType"), params.Get("exchange"), params.Get("symbol"))
+	exchange := params.Get("exchange")
+	symbol := params.Get("symbol")
+	requestType := params.Get("requestType")
+
+	url := fmt.Sprintf(endpoints.URILiveFeedSubscribe, endpoints.URIhost, requestType, exchange, symbol)
 	err := service.HTTPService.GET(url, headers, data)
 	return err
 }
