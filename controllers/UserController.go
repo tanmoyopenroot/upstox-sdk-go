@@ -88,7 +88,7 @@ func (controller *UserController) GetHoldings() {
 }
 
 // GetMasterContracts ... Get user Master Contracts
-func (controller *UserController) GetMasterContracts(exchange string, symbol string, token string) {
+func (controller *UserController) GetMasterContracts(exchange string, symbol, token interface{}) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -96,11 +96,11 @@ func (controller *UserController) GetMasterContracts(exchange string, symbol str
 	headers.Set("x-api-key", controller.Client.GetAPIKey())
 
 	params := url.Values{}
-	if symbol != "" {
-		params.Set("symbol", symbol)
+	if symbol != nil {
+		params.Set("symbol", symbol.(string))
 	}
-	if token != "" {
-		params.Set("token", token)
+	if token != nil {
+		params.Set("token", token.(string))
 	}
 
 	data := &viewmodels.MasterContract{}

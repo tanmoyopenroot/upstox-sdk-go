@@ -19,6 +19,7 @@ type Controller struct {
 	*controllers.ConnectController
 	*controllers.UserController
 	*controllers.OrderController
+	*controllers.FeedController
 }
 
 // ServiceContainer ... Injecting Dependencies
@@ -62,9 +63,19 @@ func ServiceContainer() Controller {
 		Client:       clientModel,
 	}
 
+	feedService := &services.FeedService{
+		HTTPService: httpService,
+	}
+
+	feedController := &controllers.FeedController{
+		FeedService: feedService,
+		Client:      clientModel,
+	}
+
 	return Controller{
 		connectController,
 		userController,
 		orderController,
+		feedController,
 	}
 }
