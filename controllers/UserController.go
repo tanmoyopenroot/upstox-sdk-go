@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"net/url"
 	"upstox-sdk-go/interfaces"
@@ -16,7 +15,7 @@ type UserController struct {
 }
 
 // GetProfile ... Get user profile
-func (controller *UserController) GetProfile() {
+func (controller *UserController) GetProfile() (*viewmodels.Profile, error) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -24,17 +23,12 @@ func (controller *UserController) GetProfile() {
 	headers.Set("x-api-key", controller.Client.GetAPIKey())
 
 	data := &viewmodels.Profile{}
-
 	err := controller.UserService.GetProfile(headers, data)
-	if err == nil && data.Code == 200 {
-		fmt.Println("Profile ---- ", data)
-	} else {
-		fmt.Println("Profile ---- ", err)
-	}
+	return data, err
 }
 
 // GetBalance ... Get user balance
-func (controller *UserController) GetBalance(kind string) {
+func (controller *UserController) GetBalance(kind string) (*viewmodels.Balance, error) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -42,17 +36,12 @@ func (controller *UserController) GetBalance(kind string) {
 	headers.Set("x-api-key", controller.Client.GetAPIKey())
 
 	data := &viewmodels.Balance{}
-
 	err := controller.UserService.GetBalance(kind, headers, data)
-	if err == nil && data.Code == 200 {
-		fmt.Println("Balance ---- ", data)
-	} else {
-		fmt.Println("Balance ---- ", err)
-	}
+	return data, err
 }
 
 // GetPositions ... Get user positions
-func (controller *UserController) GetPositions() {
+func (controller *UserController) GetPositions() (*viewmodels.Position, error) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -60,17 +49,12 @@ func (controller *UserController) GetPositions() {
 	headers.Set("x-api-key", controller.Client.GetAPIKey())
 
 	data := &viewmodels.Position{}
-
 	err := controller.UserService.GetPositions(headers, data)
-	if err == nil && data.Code == 200 {
-		fmt.Println("Position ---- ", data)
-	} else {
-		fmt.Println("Position ---- ", err)
-	}
+	return data, err
 }
 
 // GetHoldings ... Get user holdings
-func (controller *UserController) GetHoldings() {
+func (controller *UserController) GetHoldings() (*viewmodels.Holdings, error) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -78,17 +62,12 @@ func (controller *UserController) GetHoldings() {
 	headers.Set("x-api-key", controller.Client.GetAPIKey())
 
 	data := &viewmodels.Holdings{}
-
 	err := controller.UserService.GetHoldings(headers, data)
-	if err == nil && data.Code == 200 {
-		fmt.Println("Holding ---- ", data)
-	} else {
-		fmt.Println("Holding ---- ", err)
-	}
+	return data, err
 }
 
 // GetMasterContracts ... Get user Master Contracts
-func (controller *UserController) GetMasterContracts(exchange string, symbol, token interface{}) {
+func (controller *UserController) GetMasterContracts(exchange string, symbol, token interface{}) (*viewmodels.MasterContract, error) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -104,11 +83,6 @@ func (controller *UserController) GetMasterContracts(exchange string, symbol, to
 	}
 
 	data := &viewmodels.MasterContract{}
-
 	err := controller.UserService.GetMasterContracts(exchange, params, headers, data)
-	if err == nil && data.Code == 200 {
-		fmt.Println("Master ---- ", data)
-	} else {
-		fmt.Println("Master ---- ", err)
-	}
+	return data, err
 }

@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -17,7 +16,7 @@ type FeedController struct {
 }
 
 // GetLiveFeed ...
-func (controller *FeedController) GetLiveFeed(exchange, symbol, requestType string) {
+func (controller *FeedController) GetLiveFeed(exchange, symbol, requestType string) (*viewmodels.LiveFeed, error) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -30,17 +29,12 @@ func (controller *FeedController) GetLiveFeed(exchange, symbol, requestType stri
 	params.Set("requestType", requestType)
 
 	data := &viewmodels.LiveFeed{}
-
 	err := controller.FeedService.GetLiveFeed(params, headers, data)
-	if err == nil && data.Code == 200 {
-		fmt.Println("Live Data ---- ", data)
-	} else {
-		fmt.Println("Live Data ---- ", err)
-	}
+	return data, err
 }
 
 // SubscribeFeed ...
-func (controller *FeedController) SubscribeFeed(symbol []string, exchange, requestType string) {
+func (controller *FeedController) SubscribeFeed(symbol []string, exchange, requestType string) (*viewmodels.Subscribe, error) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -53,17 +47,12 @@ func (controller *FeedController) SubscribeFeed(symbol []string, exchange, reque
 	params.Set("requestType", requestType)
 
 	data := &viewmodels.Subscribe{}
-
 	err := controller.FeedService.SubscribeFeed(params, headers, data)
-	if err == nil && data.Code == 200 {
-		fmt.Println("Subscribe Live Data ---- ", data)
-	} else {
-		fmt.Println("Subscribe Live Data ---- ", err)
-	}
+	return data, err
 }
 
 // UnsubscribeFeed ...
-func (controller *FeedController) UnsubscribeFeed(symbol []string, exchange, requestType string) {
+func (controller *FeedController) UnsubscribeFeed(symbol []string, exchange, requestType string) (*viewmodels.Unsubscribe, error) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -76,11 +65,6 @@ func (controller *FeedController) UnsubscribeFeed(symbol []string, exchange, req
 	params.Set("requestType", requestType)
 
 	data := &viewmodels.Unsubscribe{}
-
 	err := controller.FeedService.UnsubscribeFeed(params, headers, data)
-	if err == nil && data.Code == 200 {
-		fmt.Println("unsubscribe Live Data ---- ", data)
-	} else {
-		fmt.Println("Unsubscribe Live Data ---- ", err)
-	}
+	return data, err
 }

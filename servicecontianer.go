@@ -23,8 +23,8 @@ type Controller struct {
 	*controllers.HistoricalController
 }
 
-// ServiceContainer ... Injecting Dependencies
-func ServiceContainer() Controller {
+// UpstoxServiceContainer ... Injecting Dependencies
+func UpstoxServiceContainer() Controller {
 	client := &http.Client{
 		Transport: &http.Transport{
 			MaxIdleConnsPerHost: MaxIdleConnections,

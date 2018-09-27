@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"net/url"
 	"upstox-sdk-go/interfaces"
@@ -16,7 +15,7 @@ type HistoricalController struct {
 }
 
 // GetHistoricalData ...
-func (controller *HistoricalController) GetHistoricalData(exchange, symbol, interval, startDate, endDate, format string) {
+func (controller *HistoricalController) GetHistoricalData(exchange, symbol, interval, startDate, endDate, format string) (*viewmodels.Historical, error) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -32,11 +31,6 @@ func (controller *HistoricalController) GetHistoricalData(exchange, symbol, inte
 	params.Set("format", format)
 
 	data := &viewmodels.Historical{}
-
 	err := controller.HistoricalService.GetHistoricalData(params, headers, data)
-	if err == nil && data.Code == 200 {
-		fmt.Println("Historical Data ---- ", data)
-	} else {
-		fmt.Println("Historical Data ---- ", err)
-	}
+	return data, err
 }

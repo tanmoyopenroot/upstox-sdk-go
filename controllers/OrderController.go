@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 	"upstox-sdk-go/interfaces"
@@ -16,7 +15,7 @@ type OrderController struct {
 }
 
 // GetOrderHistory ... Get user order history
-func (controller *OrderController) GetOrderHistory() {
+func (controller *OrderController) GetOrderHistory() (*viewmodels.OrderHistoryModel, error) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -24,17 +23,12 @@ func (controller *OrderController) GetOrderHistory() {
 	headers.Set("x-api-key", controller.Client.GetAPIKey())
 
 	data := &viewmodels.OrderHistoryModel{}
-
 	err := controller.OrderService.GetOrderHistory(headers, data)
-	if err == nil && data.Code == 200 {
-		fmt.Println("Order History ---- ", data)
-	} else {
-		fmt.Println("Order History ---- ", err)
-	}
+	return data, err
 }
 
 // GetOrderDetails ... Get user order details
-func (controller *OrderController) GetOrderDetails(orderID string) {
+func (controller *OrderController) GetOrderDetails(orderID string) (*viewmodels.OrderDetailsModel, error) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -42,17 +36,12 @@ func (controller *OrderController) GetOrderDetails(orderID string) {
 	headers.Set("x-api-key", controller.Client.GetAPIKey())
 
 	data := &viewmodels.OrderDetailsModel{}
-
 	err := controller.OrderService.GetOrderDetails(orderID, headers, data)
-	if err == nil && data.Code == 200 {
-		fmt.Println("Order Details ---- ", data)
-	} else {
-		fmt.Println("Order Details ---- ", err)
-	}
+	return data, err
 }
 
 // GetTradeBook ... Get user trade book
-func (controller *OrderController) GetTradeBook() {
+func (controller *OrderController) GetTradeBook() (*viewmodels.TradeBookModel, error) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -60,17 +49,12 @@ func (controller *OrderController) GetTradeBook() {
 	headers.Set("x-api-key", controller.Client.GetAPIKey())
 
 	data := &viewmodels.TradeBookModel{}
-
 	err := controller.OrderService.GetTradeBook(headers, data)
-	if err == nil && data.Code == 200 {
-		fmt.Println("Trade Book ---- ", data)
-	} else {
-		fmt.Println("Trade Book ---- ", err)
-	}
+	return data, err
 }
 
 // GetTradeHistory ... Get user trade history
-func (controller *OrderController) GetTradeHistory(orderID string) {
+func (controller *OrderController) GetTradeHistory(orderID string) (*viewmodels.TradeHistoryModel, error) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -80,15 +64,11 @@ func (controller *OrderController) GetTradeHistory(orderID string) {
 	data := &viewmodels.TradeHistoryModel{}
 
 	err := controller.OrderService.GetTradeHistory(orderID, headers, data)
-	if err == nil && data.Code == 200 {
-		fmt.Println("Trade History ---- ", data)
-	} else {
-		fmt.Println("Trade Histry ---- ", err)
-	}
+	return data, err
 }
 
 // PlaceOrder ... place user order
-func (controller *OrderController) PlaceOrder(params *viewmodels.PlaceOrderModel) {
+func (controller *OrderController) PlaceOrder(params *viewmodels.PlaceOrderModel) (*viewmodels.PlaceOrderModel, error) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -96,17 +76,12 @@ func (controller *OrderController) PlaceOrder(params *viewmodels.PlaceOrderModel
 	headers.Set("x-api-key", controller.Client.GetAPIKey())
 
 	data := &viewmodels.PlaceOrderModel{}
-
 	err := controller.OrderService.PlaceOrder(params, headers, data)
-	if err == nil && data.Code == 200 {
-		fmt.Println("Place Order ---- ", data)
-	} else {
-		fmt.Println("Place Order ---- ", err)
-	}
+	return data, err
 }
 
 // ModifyOrder ... place user order
-func (controller *OrderController) ModifyOrder(params *viewmodels.ModifyOrderModel) {
+func (controller *OrderController) ModifyOrder(params *viewmodels.ModifyOrderModel) (*viewmodels.ModifyOrderModel, error) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -114,17 +89,12 @@ func (controller *OrderController) ModifyOrder(params *viewmodels.ModifyOrderMod
 	headers.Set("x-api-key", controller.Client.GetAPIKey())
 
 	data := &viewmodels.ModifyOrderModel{}
-
 	err := controller.OrderService.ModifyOrder(data.OrderID, params, headers, data)
-	if err == nil && data.Code == 200 {
-		fmt.Println("Modify Order ---- ", data)
-	} else {
-		fmt.Println("Modify Order ---- ", err)
-	}
+	return data, err
 }
 
 // CancelOrder ... cancel user order
-func (controller *OrderController) CancelOrder(orders []string) {
+func (controller *OrderController) CancelOrder(orders []string) (*viewmodels.CancelOrderModel, error) {
 	basicAuth := "Bearer " + controller.Client.GetAccessToken()
 
 	headers := make(http.Header)
@@ -134,9 +104,5 @@ func (controller *OrderController) CancelOrder(orders []string) {
 	data := &viewmodels.CancelOrderModel{}
 
 	err := controller.OrderService.CancelOrder(strings.Join(orders, ","), headers, data)
-	if err == nil && data.Code == 200 {
-		fmt.Println("Cancel Order ---- ", data)
-	} else {
-		fmt.Println("Cancel Order ---- ", err)
-	}
+	return data, err
 }
