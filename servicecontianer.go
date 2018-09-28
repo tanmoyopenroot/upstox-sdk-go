@@ -3,9 +3,10 @@ package main
 import (
 	"net/http"
 	"time"
-	"upstox-sdk-go/controllers"
-	"upstox-sdk-go/models"
-	"upstox-sdk-go/services"
+
+	"github.com/tanmoyopenroot/upstox-sdk-go/controllers"
+	"github.com/tanmoyopenroot/upstox-sdk-go/models"
+	"github.com/tanmoyopenroot/upstox-sdk-go/services"
 )
 
 // Const ... for http client

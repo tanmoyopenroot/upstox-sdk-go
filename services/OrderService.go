@@ -2,8 +2,9 @@ package services
 
 import (
 	"fmt"
-	"upstox-sdk-go/endpoints"
-	"upstox-sdk-go/interfaces"
+
+	"github.com/tanmoyopenroot/upstox-sdk-go/endpoints"
+	"github.com/tanmoyopenroot/upstox-sdk-go/interfaces"
 )
 
 // OrderService ... Services available for client

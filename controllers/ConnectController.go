@@ -4,10 +4,11 @@ import (
 	"encoding/base64"
 	"fmt"
 	"net/http"
-	"upstox-sdk-go/endpoints"
-	"upstox-sdk-go/interfaces"
-	"upstox-sdk-go/models"
-	"upstox-sdk-go/viewmodels"
+
+	"github.com/tanmoyopenroot/upstox-sdk-go/endpoints"
+	"github.com/tanmoyopenroot/upstox-sdk-go/interfaces"
+	"github.com/tanmoyopenroot/upstox-sdk-go/models"
+	"github.com/tanmoyopenroot/upstox-sdk-go/viewmodels"
 )
 
 // ConnectController ...

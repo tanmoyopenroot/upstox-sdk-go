@@ -7,7 +7,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"upstox-sdk-go/viewmodels"
+
+	"github.com/tanmoyopenroot/upstox-sdk-go/viewmodels"
 )
 
 // HTTPService ...

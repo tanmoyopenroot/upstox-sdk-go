@@ -3,8 +3,9 @@ package services
 import (
 	"fmt"
 	"net/url"
-	"upstox-sdk-go/endpoints"
-	"upstox-sdk-go/interfaces"
+
+	"github.com/tanmoyopenroot/upstox-sdk-go/endpoints"
+	"github.com/tanmoyopenroot/upstox-sdk-go/interfaces"
 )
 
 // FeedService ... Services available for client
